@@ -13,9 +13,9 @@ public class assignment1 {
 		String[] tokens = new String[4];
 		
 		String[] str_part = extract1(raw_line.split(":")[0]);
-		String[] command_part = {" "};
+		String[] command_part = new String[2];
 		
-		if (raw_line.split(":").length != 0) {
+		if (raw_line.split(":").length == 2) {
 			command_part = extract2(raw_line.split(":")[1]);
 		}
 		
@@ -33,11 +33,20 @@ public class assignment1 {
 	
 	public static String[] extract1(String str_part) {
 		StringTokenizer st = new StringTokenizer(str_part);
-		String[] temp = new String[st.countTokens()];
+		String[] temp = new String[2];
 		
-		for (int i = 0; i < temp.length; i++) {
-			temp[i] = st.nextToken();
-			temp[i] = temp[i].substring(1, temp[i].length() - 1);
+		if (st.countTokens() == 1) {
+			StringTokenizer st2 = new StringTokenizer(st.nextToken(), "]");
+			int count = st2.countTokens();
+			for (int i = 0; i < count; i++) {
+				temp[i] = st2.nextToken().substring(1);
+			}
+		}
+		else if (st.countTokens() == 2) {
+			temp[0] = st.nextToken();
+			temp[1] = st.nextToken();
+			temp[0] = temp[0].substring(1, temp[0].length() - 1);
+			temp[1] = temp[1].substring(1, temp[1].length() - 1);
 		}
 		
 		return temp;
@@ -45,45 +54,43 @@ public class assignment1 {
 	
 	public static String[] extract2(String command_part) {
 		StringTokenizer st = new StringTokenizer(command_part);
-		String[] temp = new String[st.countTokens()];
+		String[] temp = new String[2];
 		
-		temp[0] = st.nextToken();
+		if (st.countTokens() == 1) {
+			temp[1] = st.nextToken();
+		}
 		
-		if (temp.length == 2) {
-			temp[0] = temp[0].substring(1, temp[0].length() - 1);
+		else if (st.countTokens() == 2) {
+			String temp2 = st.nextToken();
+			temp[0] = temp2.substring(1, temp2.length() - 1);
 			temp[1] = st.nextToken();
 		}
 		
 		return temp;
 	}
 	
-	public static String make_str(String str, String str_command, String count_str) {
+	public static String process_str(String str, String str_command, String count_str) {
 		String _str = str;
 		
-		if (str_command.equals("null")) {
-			System.out.println("gd");
+		if (str_command == null) {
 		}
-		
-		if (str_command.equals("U")) {
+		else if (str_command.equals("U")) {
 			_str = str.toUpperCase();
 		}
-		
 		else if (str_command.equals("L")) {
 			_str = str.toLowerCase();
 		}
-		
 		else {
 			String[] temp = str_command.split("/");
-			_str.replaceAll(temp[0], temp[1]);
+			_str = _str.replaceAll(temp[0], temp[1]);
 		}
 		
-		if (!count_str.equals("null")) {
-			int _count = Integer.parseInt(count_str);
+		if (!(count_str == null)) {
+			int _count = Integer.parseInt(count_str) - 1;
 			for (int i = 0; i < _count; i++) {
 				_str += _str;
 			}
 		}
-		
 		return _str;
 	}
 	
@@ -104,14 +111,26 @@ public class assignment1 {
 			BufferedReader fr = new BufferedReader(new FileReader(hoo_file));
 			
 			String line = "";
+			String str = "";
 			while((line = fr.readLine()) != null) {
 				String[] tokens = tokens(line);
-				
-				String str = make_str(tokens[0], tokens[1], tokens[2]);
-				System.out.println(str);
-//				fw.write("	printf(\"%s\", \"" + str + "\");");
+				str += process_str(tokens[0], tokens[1], tokens[2]);
+
+				if (tokens[3] == null) {
+				}
+				else if (tokens[3].equals("print")) {
+					fw.write("	printf(\"%s\", \"" + str + "\");\n");
+					fw.flush();
+					str = "";
+				}
+				else if (tokens[3].equals("ignore")) {
+					str = "";
+				}
 			}
 			
+			fw.write("\n");
+			fw.write("	return();\n");
+			fw.write("}");
 			fw.close();
 			fr.close();
 		} catch(Exception e) {
