@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 
 public class assignment1 {
 	
-	public static String[] tokens(String raw_line) {
+	public static String[] make_tokens(String raw_line) {
 		String[] tokens = new String[4];
 		
 		String[] str_part = extract1(raw_line.split(":")[0]);
@@ -113,14 +113,20 @@ public class assignment1 {
 			String line = "";
 			String str = "";
 			while((line = fr.readLine()) != null) {
-				String[] tokens = tokens(line);
+				String[] tokens = make_tokens(line);
 				str += process_str(tokens[0], tokens[1], tokens[2]);
 
 				if (tokens[3] == null) {
 				}
 				else if (tokens[3].equals("print")) {
-					fw.write("	printf(\"%s\", \"" + str + "\");\n");
-					fw.flush();
+					if (str.equals("")) {
+						fw.write("	printf(\"%s\", \"\\n\");\n");
+						fw.flush();
+					}
+					else {
+						fw.write("	printf(\"%s\", \"" + str + "\");\n");
+						fw.flush();
+					}
 					str = "";
 				}
 				else if (tokens[3].equals("ignore")) {
