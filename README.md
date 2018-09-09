@@ -14,15 +14,13 @@ print - 'A keyword for printing string'
 ignore - 'A keyword for ignoring string'
 
 
-## HOO examples             Output
+## HOO examples (with output)
 [bbb] : print               >> bbb
 [bbb] [U] : print           >> BBB (Change to upper case)
 [AAB] [L] : print           >> aab (Change to lower case)
 [bbb] : ignore              >> 
 [] : print                  >> "" (new line)
 [HI] : (3) print            >> HIHIHI
-
 [bbb] :
 [aaa] : print               >> bbbaaa
-
 [bbc] [b/a] : print         >> aac (Change 'b' to 'a')
