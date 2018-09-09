@@ -1,6 +1,6 @@
 # SimpleCompiler
 
-This program can make HOO file to C file
+This program can make HOO file to C file.
 
 HOO is no exist computer language.
 
@@ -21,20 +21,36 @@ ignore - 'A keyword for ignoring string'
 
 
 ## HOO examples (with output)
-[bbb] : print               >> bbb
+[bbb] : print
 
-[bbb] [U] : print           >> BBB (Change to upper case)
+>> bbb
 
-[AAB] [L] : print           >> aab (Change to lower case)
+[bbb] [U] : print
 
-[bbb] : ignore              >> 
+>> BBB (Change to upper case)
 
-[] : print                  >> "" (new line)
+[AAB] [L] : print
 
-[HI] : (3) print            >> HIHIHI
+>> aab (Change to lower case)
+
+[bbb] : ignore
+
+>> 
+
+[] : print
+
+>> "" (new line)
+
+[HI] : (3) print
+
+>> HIHIHI
 
 [bbb] :
 
-[aaa] : print               >> bbbaaa
+[aaa] : print
 
-[bbc] [b/a] : print         >> aac (Change 'b' to 'a')
+>> bbbaaa
+
+[bbc] [b/a] : print
+
+>> aac (Change 'b' to 'a')
